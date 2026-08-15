@@ -1,0 +1,37 @@
+<details open><summary>styles/main.css</summary>
+:root{
+  /*  ألوان “سِنيما‑داون‎”  */
+  --primary:#1e1e2e;          /* ظل عميق */
+  --primary-dark:#18181b;
+  --secondary:#ff7a5e;        /* وردي/برتقالي حار */
+  --accent:#29c6f6;           /* سماوي لامع */
+  --bg:#0f0f11;               /* خلفية داكنة جداً */
+  --surface:#1f1f23;          /* كارت مظهر 3‑D */
+  --text:#e2e8f0;             /* نص فاتح */
+  --muted:#777d84;
+  --radius:.75rem;
+  --shadow:0 4px 10px rgba(0,0,0,.6);
+  --transition:.25s ease;
+}
+/*  نُسق أساسي  */
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:'Segoe UI','Tajawal',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{color:inherit;text-decoration:none;transition:var(--transition)}
+a:hover{color:var(--secondary)}
+.navbar{background:var(--primary);border-bottom:1px solid var(--accent);position:sticky;top:0;z-index:1000}
+.navbar .navbar-brand{color:white;font-weight:600}
+.navbar .nav-link{color:white;padding:0.5rem 1rem}
+.navbar .nav-link:hover{color:var(--secondary)}
+.card{background:var(--surface);border:1px solid var(--accent);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:var(--transition)}
+.card:hover{transform:translateY(-5px);box-shadow:0 10px 15px rgba(0,0,0,.7)}
+.btn{border-radius:var(--radius);font-weight:600;transition:var(--transition)}
+.btn-primary{background:var(--primary);color:white}
+.btn-primary:hover{background:var(--primary-dark)}
+.btn-outline-primary{color:var(--primary);border:1px solid var(--primary)}
+
+.jumbotron{background:url(https://picsum.photos/id/1080/1200/400) center/cover no-repeat;background-size:cover;color:white;padding:5rem 1rem;text-shadow:0 .125rem .25rem rgba(0,0,0,.4)}
+.footer{background:var(--primary-dark);color:white;padding:3rem 0}
+.footer a{color:var(--secondary)}
+.footer a:hover{color:white}
+.alert{border-left:4px solid var(--accent)}
+</details>
