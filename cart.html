@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>السلة – ST SHOP</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+</head>
+<body>
+<nav class="navbar navbar-dark" style="background:var(--primary)">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">ST SHOP</a>
+    <a href="index.html" class="btn btn-outline-light"><i class="bi bi-arrow-left"></i> العودة للمتجر</a>
+  </div>
+</nav>
+
+<div class="container py-5">
+  <h1 class="text-center mb-4">سلة الشراء</h1>
+  <div id="cartArea"></div>
+
+  <div class="text-end mt-4">
+    <h4 class="fw-bold">الإجمالي: <span id="total">0 دج</span></h4>
+    <a href="checkout.html" class="btn btn-primary mt-3">تأكيد الطلب</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js.js"></script>
+<script>
+  function renderCart(){
+    const cart=JSON.parse(localStorage.getItem('cart')||'[]');
+    const area=document.getElementById('cartArea');
+    if(!cart.length){
+      area.innerHTML='<div class="text-center py-5"><i class="bi bi-cart-x fs-5"></i> السلة فارغة. <a href="index.html" class="btn btn-outline-primary mt-3">التسوق الآن</a></div>';
+      document.getElementById('total').textContent='0 دج';
+      return;
+    }
+    area.innerHTML=cart.map(p=>`
+      <div class="cart-item">
+        <img src="${p.image}" alt="${p.name}">
+        <div class="flex-grow-1">
+          <h5 class="mb-0">${p.name}</h5>
+          <small>${p.weight?p.weight+' كغ':''}</small>
+        </div>
+        <div class="d-flex align-items-center">
+          <button class="btn btn-sm btn-outline-secondary" onclick="changeQty(${p.id},-1)">-</button>
+          <input type="text" readonly class="cart-qty" value="${p.qty}">
+          <button class="btn btn-sm btn-outline-secondary" onclick="changeQty(${p.id},1)">+</button>
+        </div>
+        <div class="fw-bold">${toCurrency(p.price*p.qty)}</div>
+        <button class="btn btn-sm btn-danger ms-3" onclick="removeItem(${p.id})"><i class="bi bi-trash"></i></button>
+      </div>
+    `).join('');
+    document.getElementById('total').textContent=toCurrency(cart.reduce((s,i)=>s+i.price*i.qty,0));
+  }
+  function changeQty(id,delta){
+    const cart=JSON.parse(localStorage.getItem('cart')||'[]');
+    const item=cart.find(i=>i.id===id);
+    if(item){ item.qty+=delta; if(item.qty<1) item.qty=1; }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+  }
+  function removeItem(id){
+    let cart=JSON.parse(localStorage.getItem('cart')||'[]');
+    cart=cart.filter(i=>i.id!==id);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+  }
+  renderCart();
+</script>
+</body>
+</html>
